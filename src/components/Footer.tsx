@@ -9,7 +9,7 @@ const Footer = () => {
         {/* LEFT */}
         <div className="w-full md:w-1/2 lg:w-1/4 flex flex-col gap-8">
           <Link href="/">
-            <div className="text-2xl tracking-wide">E-com</div>
+            <div className="text-2xl tracking-wide">Tahult-Market</div>
           </Link>
           <p>3252 ChengDu, Central Plaza, Willowbrook, CA 90210, China</p>
           <span className="font-semibold">atalibdev97@gmail.com</span>
