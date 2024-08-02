@@ -4,21 +4,20 @@ import ProductsImage from "@/components/ProductsImage";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { notFound } from "next/navigation";
 
-const SinglePage = async ({params} : {params : {slug: string}}) => {
-
+const SinglePage = async ({ params }: { params: { slug: string } }) => {
   const wixClient = await wixClientServer();
-  
+
   const products = await wixClient.products
     .queryProducts()
     .eq("slug", params.slug)
     //.limit(limit || PRODUCT_PER_PAGE)
     .find();
 
-    if (!products.items[0]) {
-      return notFound();
-    }
+  if (!products.items[0]) {
+    return notFound();
+  }
 
-    const product = products.items[0];
+  const product = products.items[0];
 
   return (
     <div className="px-4 md:px-8 lg:px-16 xl-32 2xl:px-64 relative flex flex-col lg:flex-row gap-16">
@@ -32,22 +31,34 @@ const SinglePage = async ({params} : {params : {slug: string}}) => {
         <p className="text-gray-500">{product.description}</p>
         <div className="h-[2px] bg-gray-100" />
         {product.price?.price === product.price?.discountedPrice ? (
-          <h2 className="font-medium text-2xl">${product.price?.discountedPrice}</h2>   
-        ) : (<div className="flex items-center gap-4">
-          <h3 className="text-xl text-gray-500 line-through">${product.price?.price}</h3>
-          <h2 className="font-medium text-2xl">${product.price?.discountedPrice}</h2> 
-          </div>)}
+          <h2 className="font-medium text-2xl">
+            ${product.price?.discountedPrice}
+          </h2>
+        ) : (
+          <div className="flex items-center gap-4">
+            <h3 className="text-xl text-gray-500 line-through">
+              ${product.price?.price}
+            </h3>
+            <h2 className="font-medium text-2xl">
+              ${product.price?.discountedPrice}
+            </h2>
+          </div>
+        )}
         <div className="h-[2px] bg-gray-100" />
-        <CustomizeProduct />
+        {product.variants && product.productOptions && (
+          <CustomizeProduct
+          productId={product._id!}
+          variants={product.variants}
+          productOptions={product.productOptions}
+        />
+        )}
         <Add />
         <div className="h-[2px] bg-gray-100" />
-        {product.additionalInfoSections?.map((section: any) =>(
+        {product.additionalInfoSections?.map((section: any) => (
           <div className="text-sm" key={section.title}>
-          <h4 className="font-medium mb-4">{section.title}</h4>
-          <p>
-          {section.description}
-          </p>
-        </div>
+            <h4 className="font-medium mb-4">{section.title}</h4>
+            <p>{section.description}</p>
+          </div>
         ))}
       </div>
     </div>
