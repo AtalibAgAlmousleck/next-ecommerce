@@ -43,11 +43,12 @@ const Add = ({
               +
             </button>
           </div>
-          <div className="text-xs">
+          {stockNumber < 1 ? (<div className="text-xs">Poduct is out of stock</div>) : <div className="text-xs">
             Only <span className="text-orange-500">{stockNumber} items</span> left! <br />{" "}
             {"Don't "}
             {""} miss it
-          </div>
+          </div> }
+          
         </div>
         <button className="w-36 text-sm rounded-3xl ring-1 ring-dev text-dev py-2 px-4 hover:bg-dev hover:text-white disabled:cursor-not-allowed disabled:bg-pink-200 disabled:text-white disabled:ring-none">
           Add to Cart
