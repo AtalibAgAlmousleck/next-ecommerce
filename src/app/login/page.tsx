@@ -61,7 +61,10 @@ const LoginPage = () => {
 
       switch (mode) {
         case MODE.LOGIN:
-          response = await wixClient.auth.login({ email, password });
+          response = await wixClient.auth.login({
+            email,
+            password,
+          });
           break;
         case MODE.REGISTER:
           response = await wixClient.auth.register({
@@ -119,9 +122,9 @@ const LoginPage = () => {
         default:
           break;
       }
-    } catch (error) {
-      console.log(error);
-      setError("Ops! something went wrong!");
+    } catch (err) {
+      console.log(err);
+      setError("Something went wrong!");
     } finally {
       setIsLoading(false);
     }
