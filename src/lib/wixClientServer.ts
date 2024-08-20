@@ -1,6 +1,5 @@
 import { OAuthStrategy, createClient } from "@wix/sdk";
 import { collections, products } from "@wix/stores";
-
 import { cookies } from "next/headers";
 
 export const wixClientServer = async () => {
@@ -17,7 +16,7 @@ export const wixClientServer = async () => {
       collections,
     },
     auth: OAuthStrategy({
-      clientId: process.env.NEXT_PUBLIC_WIX_CLIENT_ID!,
+      clientId: process.env.NEXT_PRIVATE_WIX_CLIENT_ID !,//NEXT_PRIVATE_WIX_CLIENT_ID
       tokens: {
         refreshToken,
         accessToken: { value: "", expiresAt: 0 },

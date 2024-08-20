@@ -61,17 +61,21 @@ const LoginPage = () => {
 
       switch (mode) {
         case MODE.LOGIN:
+          console.log(response);
           response = await wixClient.auth.login({
             email,
             password,
           });
+          console.log(response);
           break;
         case MODE.REGISTER:
+          console.log(response);
           response = await wixClient.auth.register({
             email,
             password,
             profile: { nickname: username },
           });
+          console.log(response);
           break;
         case MODE.RESET_PASSWORD:
           response = await wixClient.auth.sendPasswordResetEmail(
@@ -89,13 +93,12 @@ const LoginPage = () => {
           break;
       }
 
-      switch (response?.loginState) {
+      switch (response?.loginState) { 
         case LoginState.SUCCESS:
           setMessage("Successful! You are being redirected.");
           const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
             response.data.sessionToken!
           );
-
           Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
             expires: 2,
           });
